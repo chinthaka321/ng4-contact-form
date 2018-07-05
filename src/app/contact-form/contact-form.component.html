@@ -1,0 +1,94 @@
+<form #f="ngForm" (ngSubmit)="submit(f)">
+  <h2>Sample Template driven form</h2>
+
+  <div ngModelGroup="contact" #contact="ngModelGroup">  
+    <div *ngIf="!contact.valid">Details are not valid.</div>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input 
+        required 
+        minlength="3" 
+        maxlength="10" 
+        pattern="banana" 
+        ngModel 
+        name="firstName" 
+        id="firstName" 
+        #firstName="ngModel"
+          
+        (change)="log(firstName)" 
+        type="text" 
+        class="form-control">
+      <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+        <div *ngIf="firstName.errors.required">
+          First name required.
+        </div>
+        <div *ngIf="firstName.errors.minlength">First name should be minimum 3 charactors.</div>
+        <div *ngIf="firstName.errors.pattern">First name should be equal to the pattern.</div>
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input 
+          required 
+          minlength="3" 
+          maxlength="10" 
+          pattern="bread" 
+          ngModel 
+          name="lastName" 
+          id="lastName" 
+          #lastName="ngModel"
+            
+          (change)="log(lastName)" 
+          type="text" 
+          class="form-control">
+        <div class="alert alert-danger" *ngIf="lastName.touched && !lastName.valid">
+          <div *ngIf="lastName.errors.required">
+            First name required.
+          </div>
+          <div *ngIf="lastName.errors.minlength">First name should be minimum 3 charactors.</div>
+          <div *ngIf="lastName.errors.pattern">First name should be equal to the pattern.</div>
+        </div>
+      </div>
+  </div>
+
+  <div class="form-group">
+    <label for="comment">Comment</label>
+    <textarea ngModel name="comment" id="comment" cols="30" rows="10" class="form-control"></textarea>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ngModel name="isSubscribed"> Subscribe to mailing list.
+    </label>
+  </div>
+  <div class="form-group">
+    <label for="contactMethod1">Contact Method</label>
+    <select ngModel  name="contactMethod1" id="contactMethod1" class="form-control">
+      <option></option>
+      <option *ngFor="let method of contactMethods" [value]="method.id">{{method.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="contactMethod2">Contact Method object select</label>
+    <select ngModel  name="contactMethod2" id="contactMethod2" class="form-control">
+      <option></option>
+      <option *ngFor="let method of contactMethods" [ngValue]="method">{{method.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="contactMethod3">Contact Method multiselect</label>
+    <select multiple ngModel  name="contactMethod3" id="contactMethod3" class="form-control">
+      <option></option>
+      <option *ngFor="let method of contactMethods" [value]="method.id">{{method.name}}</option>
+    </select>
+  </div>
+  <div *ngFor="let method of contactMethods" class="radio">
+    <label for="contactMethodRadio">
+      <input ngModel type="radio" name="contactMethodRadio" [value]='method.id'>
+      {{method.name}}
+    </label>
+  </div>  
+
+  Angluar Interpolation to show the form values
+  <p>{{f.value | json}}</p>
+  <button class="btn btn-primary" [disabled]="!f.valid">Submit</button>
+</form>

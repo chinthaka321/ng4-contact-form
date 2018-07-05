@@ -1,3 +1,4 @@
+//** Simple steps used to create this application **//
 // Create new app
 ng new ng4-contact-form
 
